@@ -11,9 +11,7 @@ public class app
     {
         Scanner scan;
         double weight, alcoholConsumed, time, gender, BAC;
-        double distributionRatio = 0.66;
         String output;
-        String conditional = "is not";
 
         System.out.println("Enter your weight in pounds:");
         scan = new Scanner(System.in);
@@ -31,15 +29,24 @@ public class app
         scan = new Scanner(System.in);
         gender = Double.parseDouble(scan.next());
 
+        //1 for male, 2 for female
         if(gender == 1)
-            distributionRatio = 0.73;
-
-        BAC = ( (alcoholConsumed * 5.14) / (weight * distributionRatio) ) - (.015 * time);
+        {
+            BAC = ( (alcoholConsumed * 5.14 / weight * .73) - .015 * time);
+        }
+        else
+        {
+            BAC = ( (alcoholConsumed * 5.14 / weight * .66) - .015 * time);
+        }
 
         if(BAC < 0.08)
-            conditional = "is";
-
-        output = String.format("Your BAC is %f.\nIt %s legal for you to drive!", BAC, conditional);
+        {
+            output = String.format("Your BAC is %f.\nIt is legal for you to drive!", BAC);
+        }
+        else
+        {
+            output = String.format("Your BAC is %f.\nIt is not legal for you to drive!", BAC);
+        }
 
         System.out.println(output);
     }
